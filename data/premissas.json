@@ -1,0 +1,351 @@
+{
+  "_sobre": "Premissas do modulo de energia do Citizen Assist AI. Cada valor traz unidade, tipo (REAL = dado oficial/publicado, PUBLICO = levantamento de mercado publicado, ESTIMADO = suposição justificada da equipe) e a fonte. IDs de fonte remetem a docs/05_referencias.md. Período de referência comum: 12 meses (ano de 2026) e horizonte financeiro de 15 anos.",
+  "familia": {
+    "pessoas": {
+      "valor": 4,
+      "unidade": "pessoas",
+      "tipo": "ESTIMADO",
+      "fonte": "Perfil-alvo definido pela equipe (família de baixa renda típica)",
+      "ref": []
+    },
+    "banhos_pessoa_dia": {
+      "valor": 1,
+      "unidade": "banhos/dia",
+      "tipo": "ESTIMADO",
+      "fonte": "Hábito usual",
+      "ref": []
+    },
+    "duracao_banho_min": {
+      "valor": 8,
+      "unidade": "min",
+      "tipo": "PUBLICO",
+      "fonte": "PPH Procel/Eletrobras estimou banho médio entre 8 e 10 min; usado o limite inferior",
+      "ref": [
+        "R3"
+      ]
+    },
+    "dias_mes": {
+      "valor": 30,
+      "unidade": "dias",
+      "tipo": "ESTIMADO",
+      "fonte": "Mês comercial",
+      "ref": []
+    },
+    "consumo_total_casa_kwh_mes": {
+      "valor": 200,
+      "unidade": "kWh/mês",
+      "tipo": "ESTIMADO",
+      "fonte": "Ordem de grandeza do consumo residencial médio no Sudeste (EPE); o usuário pode informar o da própria conta",
+      "ref": [
+        "R10"
+      ]
+    }
+  },
+  "chuveiro": {
+    "potencia_inverno_w": {
+      "valor": 5500,
+      "unidade": "W",
+      "tipo": "PUBLICO",
+      "fonte": "Potência nominal comum de chuveiros 220 V vendidos no Brasil (etiqueta INMETRO)",
+      "ref": [
+        "R4"
+      ]
+    },
+    "potencia_verao_w": {
+      "valor": 3200,
+      "unidade": "W",
+      "tipo": "PUBLICO",
+      "fonte": "Posição 'verão' típica de chuveiros de 5500 W",
+      "ref": [
+        "R4"
+      ]
+    },
+    "meses_posicao_inverno": {
+      "valor": 7,
+      "unidade": "meses/ano",
+      "tipo": "ESTIMADO",
+      "fonte": "Abril a outubro em São Paulo (meses mais frios)",
+      "ref": []
+    },
+    "vazao_l_min": {
+      "valor": 4.0,
+      "unidade": "L/min",
+      "tipo": "ESTIMADO",
+      "fonte": "Vazão típica de chuveiro elétrico na posição inverno; usada só na verificação física",
+      "ref": []
+    },
+    "temp_agua_fria_c": {
+      "valor": 20,
+      "unidade": "°C",
+      "tipo": "ESTIMADO",
+      "fonte": "Temperatura média anual da água da rede em SP",
+      "ref": []
+    },
+    "eficiencia_chuveiro": {
+      "valor": 0.95,
+      "unidade": "-",
+      "tipo": "PUBLICO",
+      "fonte": "Chuveiros elétricos convertem quase toda a energia em calor na água (classe A do PBE)",
+      "ref": [
+        "R4"
+      ]
+    }
+  },
+  "tarifa": {
+    "tarifa_b1_2025_sem_impostos": {
+      "valor": 0.72518,
+      "unidade": "R$/kWh",
+      "tipo": "REAL",
+      "fonte": "Tarifa B1 residencial Enel SP homologada pela ANEEL em 2025 (R$ 725,18/MWh)",
+      "ref": [
+        "R1"
+      ]
+    },
+    "reajuste_b1_2026": {
+      "valor": 0.0902,
+      "unidade": "fração",
+      "tipo": "REAL",
+      "fonte": "Reajuste residencial B1 Enel SP aprovado pela ANEEL em 30/06/2026, vigente desde 04/07/2026",
+      "ref": [
+        "R2"
+      ]
+    },
+    "icms": {
+      "valor": 0.12,
+      "unidade": "fração",
+      "tipo": "ESTIMADO",
+      "fonte": "Alíquota de ICMS residencial em SP na faixa de consumo do perfil; conferir na conta",
+      "ref": [
+        "R11"
+      ]
+    },
+    "pis_cofins": {
+      "valor": 0.05,
+      "unidade": "fração",
+      "tipo": "ESTIMADO",
+      "fonte": "PIS/COFINS variam mês a mês; valor médio aproximado",
+      "ref": [
+        "R11"
+      ]
+    },
+    "franquia_tarifa_social_kwh": {
+      "valor": 80,
+      "unidade": "kWh/mês",
+      "tipo": "REAL",
+      "fonte": "Lei 15.235/2025: desconto de 100% até 80 kWh/mês e 0% acima para a Tarifa Social",
+      "ref": [
+        "R5"
+      ]
+    }
+  },
+  "solar_recurso": {
+    "irradiacao_kwh_m2_dia": {
+      "valor": 4.5,
+      "unidade": "kWh/m²·dia",
+      "tipo": "PUBLICO",
+      "fonte": "Média anual no plano inclinado para a cidade de São Paulo (ordem de grandeza CRESESB/SunData e Atlas Brasileiro de Energia Solar)",
+      "ref": [
+        "R6"
+      ]
+    }
+  },
+  "aquecedor_solar": {
+    "custo_instalado": {
+      "valor": 4500,
+      "unidade": "R$",
+      "tipo": "PUBLICO",
+      "fonte": "Kit 200 L com coletor ~R$ 4.180 no varejo e caso instalado de R$ 4.180 (UFRJ); faixa de mercado R$ 3.000 a R$ 8.000",
+      "ref": [
+        "R7"
+      ]
+    },
+    "area_coletor_m2": {
+      "valor": 2.0,
+      "unidade": "m²",
+      "tipo": "PUBLICO",
+      "fonte": "Kit compacto residencial 200 L com 1 a 2 coletores",
+      "ref": [
+        "R7"
+      ]
+    },
+    "volume_reservatorio_l": {
+      "valor": 200,
+      "unidade": "L",
+      "tipo": "PUBLICO",
+      "fonte": "Reservatório de 200 L é a referência de mercado para 3-4 pessoas",
+      "ref": [
+        "R7"
+      ]
+    },
+    "eficiencia_sistema": {
+      "valor": 0.35,
+      "unidade": "-",
+      "tipo": "ESTIMADO",
+      "fonte": "Rendimento médio anual coletor plano + perdas no reservatório (conservador)",
+      "ref": [
+        "R8"
+      ]
+    },
+    "fracao_solar": {
+      "valor": 0.7,
+      "unidade": "-",
+      "tipo": "ESTIMADO",
+      "fonte": "Parcela anual da água quente atendida pelo sol em SP; o chuveiro elétrico cobre dias nublados",
+      "ref": [
+        "R8"
+      ]
+    },
+    "manutencao_ano": {
+      "valor": 100,
+      "unidade": "R$/ano",
+      "tipo": "ESTIMADO",
+      "fonte": "Limpeza do coletor e revisão básica",
+      "ref": []
+    },
+    "vida_util_anos": {
+      "valor": 15,
+      "unidade": "anos",
+      "tipo": "ESTIMADO",
+      "fonte": "Vida útil típica informada por fabricantes",
+      "ref": []
+    }
+  },
+  "fotovoltaico": {
+    "custo_wp": {
+      "valor": 4.0,
+      "unidade": "R$/Wp",
+      "tipo": "ESTIMADO",
+      "fonte": "Greener: sistema residencial de 4 kWp ~R$ 2,84/Wp (jun/2025), alta de 7% no 1o sem/2026; sistemas menores custam mais por Wp",
+      "ref": [
+        "R9"
+      ]
+    },
+    "custo_minimo": {
+      "valor": 5000,
+      "unidade": "R$",
+      "tipo": "ESTIMADO",
+      "fonte": "Custo mínimo de um sistema conectado (inversor/microinversor, projeto, homologação, mão de obra)",
+      "ref": [
+        "R9"
+      ]
+    },
+    "performance_ratio": {
+      "valor": 0.75,
+      "unidade": "-",
+      "tipo": "ESTIMADO",
+      "fonte": "Perdas por temperatura, sujeira, cabos e inversor",
+      "ref": [
+        "R6"
+      ]
+    },
+    "degradacao_ano": {
+      "valor": 0.005,
+      "unidade": "fração/ano",
+      "tipo": "PUBLICO",
+      "fonte": "Garantia típica de módulos (~0,5%/ano)",
+      "ref": []
+    },
+    "fio_b_parcela_tarifa": {
+      "valor": 0.28,
+      "unidade": "fração",
+      "tipo": "ESTIMADO",
+      "fonte": "Participação aproximada da TUSD Fio B na tarifa",
+      "ref": [
+        "R12"
+      ]
+    },
+    "fio_b_cobrado_2026": {
+      "valor": 0.6,
+      "unidade": "fração",
+      "tipo": "REAL",
+      "fonte": "Lei 14.300/2022: novos sistemas pagam 60% do Fio B sobre a energia compensada em 2026",
+      "ref": [
+        "R12"
+      ]
+    },
+    "manutencao_ano": {
+      "valor": 100,
+      "unidade": "R$/ano",
+      "tipo": "ESTIMADO",
+      "fonte": "Limpeza dos módulos",
+      "ref": []
+    },
+    "area_m2_por_kwp": {
+      "valor": 5.0,
+      "unidade": "m²/kWp",
+      "tipo": "PUBLICO",
+      "fonte": "Módulos de ~21% de eficiência",
+      "ref": []
+    }
+  },
+  "habitos": {
+    "duracao_banho_meta_min": {
+      "valor": 5,
+      "unidade": "min",
+      "tipo": "ESTIMADO",
+      "fonte": "Meta de banho curto recomendada em campanhas de uso consciente",
+      "ref": [
+        "R3"
+      ]
+    },
+    "custo_implantacao": {
+      "valor": 0,
+      "unidade": "R$",
+      "tipo": "ESTIMADO",
+      "fonte": "Mudança de hábito, sem compra",
+      "ref": []
+    }
+  },
+  "financeiro": {
+    "horizonte_anos": {
+      "valor": 15,
+      "unidade": "anos",
+      "tipo": "ESTIMADO",
+      "fonte": "Horizonte comum = menor vida útil entre as tecnologias comparadas (aquecedor solar ~15 anos); a FV dura mais (~25 anos), o que favorece a FV fora desse horizonte",
+      "ref": []
+    },
+    "taxa_desconto": {
+      "valor": 0.08,
+      "unidade": "fração/ano",
+      "tipo": "ESTIMADO",
+      "fonte": "Custo de oportunidade aproximado para uma família (próximo de aplicações conservadoras)",
+      "ref": []
+    },
+    "aumento_tarifa_ano": {
+      "valor": 0.05,
+      "unidade": "fração/ano",
+      "tipo": "ESTIMADO",
+      "fonte": "Aumento médio anual de tarifa assumido (cenário base)",
+      "ref": []
+    }
+  },
+  "ambiental": {
+    "fator_emissao_sin_kg_kwh": {
+      "valor": 0.0385,
+      "unidade": "kg CO₂/kWh",
+      "tipo": "REAL",
+      "fonte": "Fator médio anual do SIN em 2023 (38,5 kgCO2/MWh), MCTI/SIRENE; meses de 2025 ficaram entre 21,5 e 28,9 kg/MWh",
+      "ref": [
+        "R13"
+      ]
+    },
+    "fv_ciclo_vida_kg_kwh": {
+      "valor": 0.041,
+      "unidade": "kg CO₂eq/kWh",
+      "tipo": "REAL",
+      "fonte": "Mediana de emissões de ciclo de vida da FV em telhado (IPCC AR5, Anexo III)",
+      "ref": [
+        "R14"
+      ]
+    },
+    "horario_pico_inicio_h": {
+      "valor": 18,
+      "unidade": "h",
+      "tipo": "PUBLICO",
+      "fonte": "Pico residencial 18h-21h com forte participação do chuveiro",
+      "ref": [
+        "R3"
+      ]
+    }
+  }
+}

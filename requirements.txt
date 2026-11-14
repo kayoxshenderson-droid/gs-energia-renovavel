@@ -1,0 +1,5 @@
+# O assistente de terminal (app_cli.py) usa só a biblioteca padrão.
+streamlit>=1.45      # interface web (app_web.py)
+pandas>=2.0          # tabela da interface web
+matplotlib>=3.8      # gráficos (scripts/gerar_relatorio.py)
+pytest>=8.0          # testes

@@ -1,0 +1,6 @@
+codigo,alternativa,renovavel,energia_rede_kwh_ano,kwh_evitados_ano,economia_ano1_rs,investimento_rs,manutencao_rs_ano,payback_simples_anos,payback_descontado_anos,vpl_15anos_rs,co2_evitado_kg_ano,alivio_pico_kw,area_telhado_m2,agua_economizada_l_ano
+BASE,Situação atual (chuveiro elétrico),False,872.0,0,0,0,0,,,0,0,0,0,0
+A,Banho consciente (5 min),False,545.0,327.0,311.47,0,0,0.0,0.0,3578.16,12.59,0.0,0.0,17520
+B,Aquecedor solar + chuveiro de apoio,True,261.6,610.4,581.42,4500,100,7.65,11.14,1323.29,23.5,3.85,2.0,0
+C,Placas fotovoltaicas para o banho,True,872.0,872.0,691.06,5000,100,7.19,10.32,1831.03,-2.18,0.0,3.54,0
+A+B,Banho consciente + aquecedor solar,True,163.5,708.5,674.86,4500,100,6.63,9.2,2396.74,27.28,3.85,2.0,17520
