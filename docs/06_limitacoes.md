@@ -21,7 +21,7 @@
 | Finanças | Aumento de tarifa (5% a.a.) e taxa de desconto (8% a.a.) são cenários; sem financiamento nem inflação de manutenção | A sensibilidade mostra que o VPL das renováveis pode ficar negativo |
 | Ambiental | Fator de emissão médio anual de 2023; não usamos fator marginal do horário de pico | O benefício do aquecedor solar no pico está subestimado |
 | Preços | Referências de mercado de 2025/2026; variam por região e fornecedor | Peça orçamentos |
-| Assistente | Interpreta perguntas por palavras-chave; pode não entender frases muito diferentes | Mostra o menu de perguntas quando não entende |
+| Assistente | Perguntas livres são interpretadas por palavras-chave; frases muito diferentes podem não ser entendidas | O menu numerado cobre todas as funções; quando não entende, ele mostra as opções |
 
 ## Como o assistente comunica isso
 

@@ -153,8 +153,8 @@ class AssistenteEnergia:
             f"{num(kwh_mes, 1)} kWh.\n"
             f"Na sua tarifa ({brl(self._tarifa())}/kWh) isso custa perto de {brl(custo_mes)} por mês, "
             f"cerca de {num(100 * r['participacao_chuveiro_na_conta'])}% do consumo da casa.\n"
-            f"Conferência física: na posição inverno o chuveiro esquenta a água em ~{num(vt['elevacao_temp_c'])} C "
-            f"(de {num(self.p['chuveiro']['temp_agua_fria_c'])} para ~{num(vt['temp_saida_c'])} C)."
+            f"Conferência física: na posição inverno o chuveiro esquenta a água em ~{num(vt['elevacao_temp_c'])} °C "
+            f"(de {num(self.p['chuveiro']['temp_agua_fria_c'])} para ~{num(vt['temp_saida_c'])} °C)."
             + self._rodape(["R1", "R2", "R3", "R4"])
         )
 

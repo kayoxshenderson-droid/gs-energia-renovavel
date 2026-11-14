@@ -13,10 +13,13 @@ import csv
 import sys
 from pathlib import Path
 
-import matplotlib
+try:  # graficos sao opcionais: sem matplotlib o script gera so tabelas e CSVs
+    import matplotlib
 
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt  # noqa: E402
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+except ImportError:
+    plt = None
 
 RAIZ = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(RAIZ / "src"))
@@ -100,24 +103,8 @@ def main():
                         round(a.area_telhado_m2, 2), round(a.agua_economizada_l_ano)])
 
     # ---------------------------------------------------- sensibilidade
-    cenarios = [
-        ("Tarifa R$ 0,80/kWh", {"tarifa": 0.80}), ("Tarifa R$ 1,20/kWh", {"tarifa": 1.20}),
-        ("Aquecedor solar R$ 3.000", {"aquecedor_solar__custo_instalado": 3000}),
-        ("Aquecedor solar R$ 8.000", {"aquecedor_solar__custo_instalado": 8000}),
-        ("FV custo mínimo R$ 7.000", {"fotovoltaico__custo_minimo": 7000}),
-        ("Fração solar 55%", {"aquecedor_solar__fracao_solar": 0.55}),
-        ("Irradiação 4,0 kWh/m².dia", {"solar_recurso__irradiacao_kwh_m2_dia": 4.0}),
-        ("2 pessoas", {"familia__pessoas": 2}), ("6 pessoas", {"familia__pessoas": 6}),
-        ("Banho de 12 min", {"familia__duracao_banho_min": 12}),
-        ("Tarifa sobe 0%/ano", {"financeiro__aumento_tarifa_ano": 0.0}),
-    ]
-    sens = []
-    for nome, aj in [("Cenário base", {})] + cenarios:
-        tarifa = aj.pop("tarifa", None) if "tarifa" in aj else None
-        pp = pr.com_ajustes(p, **aj)
-        d = cp.por_codigo(cp.comparar(pp, tarifa=tarifa))
-        sens.append([nome, d["A"].economia_ano1, d["B"].payback_simples, d["B"].vpl_horizonte,
-                     d["C"].payback_simples, d["C"].vpl_horizonte, d["A+B"].payback_simples])
+    sens = [[x["cenario"], x["economia_A"], x["payback_B"], x["vpl_B"], x["payback_C"], x["vpl_C"],
+             x["payback_AB"]] for x in cp.sensibilidade(p)]
     with open(RAIZ / "data" / "sensibilidade.csv", "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
         w.writerow(["cenario", "economia_A_ano1", "payback_B", f"vpl_B_{H}a", "payback_C", f"vpl_C_{H}a", "payback_AB"])
@@ -196,6 +183,9 @@ def main():
     (RAIZ / "docs" / "02_dados_e_premissas.md").write_text("\n".join(linhas), encoding="utf-8")
 
     # ------------------------------------------------------------ graficos
+    if plt is None:
+        print("matplotlib nao instalado: tabelas e CSVs gerados, graficos ignorados.")
+        return
     (RAIZ / "docs" / "img").mkdir(parents=True, exist_ok=True)
     fig, ax = plt.subplots(figsize=(8, 4.2), facecolor=SUPERFICIE)
     _estilo(ax)

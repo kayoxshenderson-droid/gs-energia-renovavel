@@ -10,7 +10,7 @@ Verificar se as orientações do assistente sobre energia do banho são **compre
 
 1. **Consentimento verbal** (ler para o participante): *“Vou testar um assistente sobre economia de energia no banho. Não vou gravar seu nome nem dados pessoais; anoto só suas opiniões. Pode parar quando quiser. Tudo bem?”*
 2. **Perfil mínimo**, sem dados pessoais: faixa etária (18–29 / 30–49 / 50+), nº de moradores, se tem Tarifa Social (sim/não/não sabe), familiaridade com tecnologia (baixa/média/alta). Identificar só como **P1, P2, P3…**
-3. **Tarefas** (o participante digita ou fala; você digita se preferir):
+3. **Tarefas** no `main.py` (o participante usa o menu ou digita; você pode digitar por ele):
    - T1. Descobrir quanto o chuveiro gasta por mês.
    - T2. Pedir dicas para economizar.
    - T3. Informar o próprio caso (pessoas, minutos de banho, se tem Tarifa Social).
@@ -65,5 +65,7 @@ Antes dos testes com usuários, o próprio desenvolvedor testou o assistente com
 | D4 | Tabela de comparação no terminal | Colunas de valores grudadas | Larguras das colunas aumentadas |
 | D5 | Gráfico de energia por alternativa | Nomes longos se sobrepunham no eixo | Rótulos curtos |
 | D6 | Textos sem acentuação | Leitura mais difícil para o público | Respostas reescritas com acentuação correta |
+| D7 | Primeira versão tinha interface web (link local) | Para o público e para a avaliação, rodar direto no IDLE/terminal é mais simples | Interface única em terminal (`main.py`) com menu numerado e formulário de perfil |
+| D8 | Relatório com tarifa informada pelo usuário | A sensibilidade ignorava a tarifa do usuário e o “cenário base” não batia com a tabela | `sensibilidade()` passou a usar o perfil e a tarifa atuais; teste adicionado |
 
-Os 28 testes automatizados (`python -m pytest -q`) garantem também que cada resposta traga **fontes e limites** e que os números ditos ao usuário sejam os calculados.
+Os 18 testes automáticos (`python tests/test_energia.py` ou opção 13 do menu) garantem também que cada resposta traga **fontes e limites** e que os números ditos ao usuário sejam os calculados.

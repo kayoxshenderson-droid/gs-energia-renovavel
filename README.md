@@ -19,7 +19,7 @@
 
 ## Funcionalidades de energia
 
-1. **Diagnóstico do banho** — calcula kWh/mês, R$/mês e participação na conta (E = P × t), com conferência física pelo calor da água (Q = m·c·ΔT).
+1. **Diagnóstico do banho** (menu 1) — calcula kWh/mês, R$/mês e participação na conta (E = P × t), com conferência física pelo calor da água (Q = m·c·ΔT).
 2. **Comparação de alternativas** para a mesma necessidade e o mesmo período (12 meses; finanças em 15 anos):
    - **A** – Banho consciente (5 min), sem custo;
    - **B** – **Aquecedor solar de água** (fonte renovável) com o chuveiro como apoio;
@@ -27,7 +27,7 @@
    - **A+B** – combinação recomendada.
 3. **Custos, viabilidade e impactos** — investimento, economia, retorno simples e descontado, VPL, CO₂ evitado, alívio no horário de pico, água economizada, área de telhado.
 4. **Tarifa Social** — considera a gratuidade dos primeiros 80 kWh/mês (Lei 15.235/2025) no cálculo da economia.
-5. **Personalização na conversa** — “somos 3 pessoas, banho de 10 minutos, chuveiro 7500 W, tarifa R$ 1,05, tenho tarifa social” atualiza todas as contas; o assistente avisa se os dados ficarem incoerentes.
+5. **Personalização** — pelo formulário do menu 10 ou digitando “somos 3 pessoas, banho de 10 minutos, chuveiro 7500 W, tarifa R$ 1,05, tenho tarifa social”; todas as contas são refeitas e o assistente avisa se os dados ficarem incoerentes.
 6. **Fontes e limites em toda resposta** — nenhuma estimativa é apresentada como garantida.
 
 ## Principais resultados (perfil-base)
@@ -48,34 +48,44 @@
 
 ## Como executar
 
-Requisitos: Python 3.10+.
+Tudo roda **no terminal ou no IDLE**, só com a biblioteca padrão do Python 3.10+. Não há site nem nada para instalar.
+
+**No IDLE (mais fácil):**
+1. Baixe o repositório (botão verde *Code → Download ZIP*) e extraia.
+2. Abra o IDLE → *File → Open* → escolha **`main.py`**.
+3. Aperte **F5**. O menu aparece na janela do IDLE.
+
+**No terminal:**
 
 ```bash
-git clone <URL-DO-REPOSITORIO>
-cd citizen-assist-energia
-pip install -r requirements.txt
-
-# 1) Assistente no terminal (só precisa da biblioteca padrão)
-python app_cli.py
-python app_cli.py "vale a pena aquecedor solar?"     # pergunta única
-
-# 2) Assistente com interface web (chat + tabela comparativa)
-streamlit run app_web.py
-
-# 3) Recalcular tabelas, CSVs e gráficos a partir das premissas
-python scripts/gerar_relatorio.py
-
-# 4) Testes automatizados (fórmulas, física e coerência análise ↔ respostas)
-python -m pytest -q
+git clone https://github.com/kayoxshenderson-droid/gs-energia-renovavel.git
+cd gs-energia-renovavel
+python main.py                      # assistente com menu
+python tests/test_energia.py        # testes automáticos (também pela opção 13 do menu)
+python scripts/gerar_relatorio.py   # recalcula tabelas e CSVs (gráficos PNG só se houver matplotlib)
 ```
 
-Perguntas para testar: “Quanto o chuveiro gasta por mês?”, “Como economizar no banho?”, “Vale a pena um aquecedor solar?”, “E placa solar?”, “Compare as opções”, “Como funciona a Tarifa Social?”, “Qual o impacto ambiental?”, “Quais as fontes?”, “Isso é garantido?”.
+**Menu do assistente:**
+
+```
+ 1. Quanto o chuveiro gasta?            7. Impacto ambiental
+ 2. Dicas para economizar (sem custo)   8. Fontes dos dados
+ 3. Vale a pena aquecedor solar?        9. Limites das estimativas
+ 4. Vale a pena placa fotovoltaica?    10. Ajustar MEU PERFIL
+ 5. Comparar todas as opções           11. Relatório completo + sensibilidade
+ 6. Tarifa Social                      12. Ver meu perfil
+ 0. Sair                               13. Rodar os testes automáticos
+ Ou digite uma pergunta (ex.: "somos 3 pessoas, banho de 10 minutos")
+```
+
+Na opção **10** o assistente pergunta pessoas, minutos de banho, potência do chuveiro, consumo da conta, tarifa e Tarifa Social (Enter mantém o valor atual), e todas as respostas passam a usar o seu perfil. A opção **11** mostra a tabela comparativa, um gráfico de barras em texto e a análise de sensibilidade.
+
+Perguntas livres para testar: “Quanto o chuveiro gasta por mês?”, “Como economizar no banho?”, “Vale a pena um aquecedor solar?”, “E placa solar?”, “Compare as opções”, “Como funciona a Tarifa Social?”, “Qual o impacto ambiental?”, “Quais as fontes?”, “Isso é garantido?”.
 
 ## Estrutura do repositório
 
 ```
-├── app_cli.py                  # assistente no terminal
-├── app_web.py                  # assistente web (Streamlit)
+├── main.py                     # >>> ABRA ESTE NO IDLE E APERTE F5 <<<
 ├── src/energia/
 │   ├── premissas.py            # leitura das premissas
 │   ├── calculos.py             # fórmulas de energia, tarifa, solar, finanças e CO2
@@ -86,7 +96,7 @@ Perguntas para testar: “Quanto o chuveiro gasta por mês?”, “Como economiz
 │   ├── resultados_alternativas.csv
 │   └── sensibilidade.csv
 ├── scripts/gerar_relatorio.py  # gera resultados, CSVs e gráficos
-├── tests/test_energia.py       # 28 testes automatizados
+├── tests/test_energia.py       # 18 testes automáticos (unittest, biblioteca padrão)
 └── docs/
     ├── 01_contexto.md                    # público, necessidade e papel do assistente
     ├── 02_dados_e_premissas.md           # origem, unidades, período e premissas
@@ -101,7 +111,7 @@ Perguntas para testar: “Quanto o chuveiro gasta por mês?”, “Como economiz
 
 ## Integração com o Citizen Assist AI
 
-O módulo é um pacote Python independente (`src/energia`). Qualquer front-end do Citizen Assist AI (chat web, WhatsApp, app) só precisa chamar:
+O módulo é um pacote Python independente (`src/energia`), usado pelo `main.py`. Qualquer outra parte do Citizen Assist AI pode usar a mesma lógica chamando:
 
 ```python
 from energia.assistente import AssistenteEnergia

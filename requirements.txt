@@ -1,5 +1,3 @@
-# O assistente de terminal (app_cli.py) usa só a biblioteca padrão.
-streamlit>=1.45      # interface web (app_web.py)
-pandas>=2.0          # tabela da interface web
-matplotlib>=3.8      # gráficos (scripts/gerar_relatorio.py)
-pytest>=8.0          # testes
+# O projeto usa SOMENTE a biblioteca padrão do Python 3.10+ (main.py e testes).
+# Opcional: matplotlib, apenas para gerar os gráficos PNG de docs/img com scripts/gerar_relatorio.py
+# matplotlib>=3.8

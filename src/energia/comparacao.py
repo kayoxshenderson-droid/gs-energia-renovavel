@@ -147,3 +147,33 @@ def comparar(p: dict, tarifa_social: bool = False, tarifa: float | None = None) 
 
 def por_codigo(resultado: dict) -> dict:
     return {a.codigo: a for a in resultado["alternativas"]}
+
+
+# Cenarios da analise de sensibilidade: (nome, tarifa fixa ou None, ajustes nas premissas)
+CENARIOS_SENSIBILIDADE = [
+    ("Tarifa R$ 0,80/kWh", 0.80, {}),
+    ("Tarifa R$ 1,20/kWh", 1.20, {}),
+    ("Aquecedor solar R$ 3.000", None, {"aquecedor_solar__custo_instalado": 3000}),
+    ("Aquecedor solar R$ 8.000", None, {"aquecedor_solar__custo_instalado": 8000}),
+    ("FV custo mínimo R$ 7.000", None, {"fotovoltaico__custo_minimo": 7000}),
+    ("Fração solar 55%", None, {"aquecedor_solar__fracao_solar": 0.55}),
+    ("Irradiação 4,0 kWh/m².dia", None, {"solar_recurso__irradiacao_kwh_m2_dia": 4.0}),
+    ("2 pessoas", None, {"familia__pessoas": 2}),
+    ("6 pessoas", None, {"familia__pessoas": 6}),
+    ("Banho de 12 min", None, {"familia__duracao_banho_min": 12}),
+    ("Tarifa sobe 0%/ano", None, {"financeiro__aumento_tarifa_ano": 0.0}),
+]
+
+
+def sensibilidade(p: dict, tarifa: float | None = None, tarifa_social: bool = False) -> list[dict]:
+    """Recalcula as alternativas mudando uma premissa por vez (a partir do perfil atual)."""
+    from . import premissas as pr
+    linhas = []
+    for nome, tarifa_cenario, ajustes in [("Cenário base", None, {})] + CENARIOS_SENSIBILIDADE:
+        t = tarifa_cenario if tarifa_cenario is not None else tarifa
+        d = por_codigo(comparar(pr.com_ajustes(p, **ajustes), tarifa_social, t))
+        linhas.append({"cenario": nome, "economia_A": d["A"].economia_ano1,
+                       "payback_B": d["B"].payback_simples, "vpl_B": d["B"].vpl_horizonte,
+                       "payback_C": d["C"].payback_simples, "vpl_C": d["C"].vpl_horizonte,
+                       "payback_AB": d["A+B"].payback_simples})
+    return linhas
